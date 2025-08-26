@@ -81,10 +81,11 @@ function App() {
             <h1 className="text-2xl font-semibold">Password Generator</h1>
             <button
               onClick={toggleTheme}
-              className="text-2xl p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-500 transition-colors"
+              className="text-2xl p-2 rounded-full bg-white dark:bg-gray-800 shadow-md hover:shadow-lg border border-gray-300 dark:border-gray-700 hover:bg-opacity-20 hover:bg-gray-500 transition-all duration-200 ease-in-out"
             >
-              {theme === "dark" ? "🌞" : "🌙"}
+              {theme === "dark" ? "🌙" : "🌞"}
             </button>
+
           </div>
 
           <div className="flex shadow rounded-lg overflow-hidden mb-6">
