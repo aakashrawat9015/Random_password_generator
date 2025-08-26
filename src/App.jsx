@@ -30,22 +30,34 @@ function App() {
   const passwordRef = useRef(null);
 
   const copyPassword = () => {
-    passwordRef.current?.select()
+    passwordRef.current?.select();
     window.navigator.clipboard.writeText(password);
   };
 
   useEffect(() => {
     passwordGenerator();
-  }, [length, isNumberAllowed, isCharAllowed]);
+  }, [length, isNumberAllowed, isCharAllowed, passwordGenerator]);
+
+  // Apply theme class to the body element
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
 
   return (
-    <div className={`${theme === 'dark' ? 'dark' : 'dark'}`}>
-      <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-500">
-        <div className="w-full max-w-lg mx-auto shadow-md rounded-lg p-8 bg-white dark:bg-gray-800 text-black dark:text-white transition-colors duration-500">
+    <div className={theme}>
+      <div className={`flex justify-center items-center min-h-screen transition-colors duration-500 ${
+        theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'
+      }`}>
+        <div className={`w-full max-w-lg mx-auto shadow-md rounded-lg p-8 transition-colors duration-500 ${
+          theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'
+        }`}>
 
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl font-semibold">Password Generator</h1>
-            <button onClick={toggleTheme} className="text-2xl">
+            <button 
+              onClick={toggleTheme} 
+              className="text-2xl p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-500 transition-colors"
+            >
               {theme === "dark" ? "🌞" : "🌙"}
             </button>
           </div>
@@ -54,14 +66,17 @@ function App() {
             <input
               type="text"
               value={password}
-              className="outline-none w-full py-2 px-3 bg-gray-200 dark:bg-gray-700 text-black dark:text-white"
+              className={`outline-none w-full py-2 px-3 ${
+                theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-gray-200 text-black'
+              }`}
               placeholder='Generated Password'
               ref={passwordRef}
               readOnly
             />
             <button
-              className='outline none bg-blue-700 text-white px-3 py-0.5 shrink-0 hover:bg-blue-500'
-              onClick={(copyPassword)}>
+              className='outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0 hover:bg-blue-500 transition-colors'
+              onClick={copyPassword}
+            >
               Copy
             </button>
           </div>
@@ -73,7 +88,7 @@ function App() {
                 min={6}
                 max={20}
                 value={length}
-                onChange={(e) => setLength(e.target.value)}
+                onChange={(e) => setLength(Number(e.target.value))}
                 className="cursor-pointer w-full accent-blue-500"
               />
               <label className="min-w-fit">Length: {length}</label>
